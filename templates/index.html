@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>bnm simple http server</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <div class="min-h-screen bg-neutral-50 dark:bg-neutral-950 flex items-center justify-center p-4">
+        <div class="max-w-md w-full bg-white dark:bg-neutral-900 shadow-lg rounded-lg overflow-hidden">
+          <div class="p-6">
+            <div class="flex items-center justify-between mb-4">
+              <h1 class="text-xl font-semibold text-neutral-900 dark:text-neutral-100">Simple HTTP Server</h1>
+              <div class="flex items-center space-x-2 text-sm text-emerald-600 px-2 py-1 rounded-md bg-emerald-500/10 w-fit">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Server is operational</span>
+              </div>
+            </div>
+            <div class="space-y-4">
+              <div class="space-y-2">
+                <div class="flex items-center space-x-2 text-sm text-neutral-600 dark:text-neutral-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                  <span>Total Requests: {{.RequestCount}}</span>
+                </div>
+                <div class="flex items-center space-x-2 text-sm text-neutral-600 dark:text-neutral-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                    <span id="uptime">Uptime: {{.Uptime}}s</span>
+                </div>
+                {{if .Subdomain}}
+                    <div class="flex items-center space-x-2 text-sm text-neutral-600 dark:text-neutral-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-globe"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 a15.3 15.3 0 0 1 -4 10z"></path></svg>
+                        <span>Subdomain: {{.Subdomain}}</span>
+                    </div>
+                {{end}}
+              </div>
+            </div>
+          </div>
+          <div class="border-t border-neutral-200 dark:border-neutral-800 px-6 py-4">
+            <div class="text-sm text-neutral-500 grid grid-cols-2 gap-x-2 gap-y-2">
+              <div class="flex items-center space-x-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-hard-drive"><line x1="22" y1="12" x2="2" y2="12"></line><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"></path><line x1="6" y1="16" x2="6.01" y2="16"></line><line x1="10" y1="16" x2="10.01" y2="16"></line></svg>
+                <span>Port: {{.ServerPort}}</span>
+              </div>
+              <div class="flex items-center space-x-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-git-branch"><line x1="6" y1="3" x2="6" y2="15"></line><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M18 9a9 9 0 0 1-9 9"></path></svg>
+                <span>Version: {{.ServerVersion}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            let initialUptime = parseInt("{{.Uptime}}");
+            const uptimeElement = document.getElementById("uptime");
+            
+            setInterval(() => {
+                initialUptime++;
+                uptimeElement.innerText = `Uptime: ${initialUptime}s`;
+            }, 1000);
+
+            console.clear();
+            console.log(`
+|_  _  _ _  
+|_)| || | |      https://f.bnm.st
+            `);
+        });
+    </script>                                                
+</body>
+</html>

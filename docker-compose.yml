@@ -1,0 +1,12 @@
+version: "3.9"
+
+services:
+  server:
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.web.rule=Host(`sh.bnmwag.dev`)"
+      - "traefik.http.routers.web.entrypoints=websecure"
+      - "traefik.http.routers.web.tls.certresolver=myresolver"
+    build: .
+    ports:
+      - "8080:8080"
